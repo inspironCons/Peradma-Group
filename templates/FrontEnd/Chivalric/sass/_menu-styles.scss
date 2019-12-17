@@ -1,0 +1,285 @@
+.column-menu{
+    width: 195px;
+    float: left;
+    @media (max-width: 767px){
+    }
+    li{
+        a{
+            padding: 0 15px;
+            font: 13px/38px $kanit;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            span{
+            }
+            &:hover,&:focus{
+                background: none;
+            }
+        }
+        &.active{
+            a{
+                color: #333;
+                span{
+                }
+            }
+        }
+        &.open{
+            a{
+                background: none;
+                &:hover,&:focus{
+                    background: none;
+                }
+                span{
+                    transform: rotate(180deg);
+                }
+            }
+            ul{
+                background: none;
+                position: relative;
+                margin: 0;
+                margin: 0;
+                border: none;
+                box-shadow: none;
+                li{
+                    a{
+                        &:hover,&:focus{
+                        }
+                    }
+                }
+            }
+        }        
+    }
+    &.white-bg{
+        li{
+            a{
+                color: #808080;
+                &:hover,&:focus{
+                    color: #333;
+                }
+            }
+            &.active{
+                a{
+                    color: #333;
+                }
+            }
+        }
+    }
+    &.black-bg{
+        li{
+            a{
+                color: #333;
+                &:hover,&:focus{
+                    color: #fff;
+                }
+            }
+            &.active{
+                a{
+                    color: #fff;
+                }
+            }
+        }
+    }
+}
+
+
+.navbar-default{
+    margin-bottom: 0;
+    background: #f5f4f4;
+    border: none;
+    border-radius: 0;
+    text-transform: uppercase;
+    @include transition;
+    &.affix{
+        top: 0;
+        width: 100%;
+        z-index: 100;
+        & + header + section{
+            margin-top: 57px;
+        }
+    }
+    
+    .navbar-header{
+        margin: 0;
+    }
+    
+    .navbar-toggle{
+        float: none;
+        margin: 0 auto;
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 0;
+        padding: 0 14px;
+        @media (max-width: 767px){            
+            display: block;
+        }
+        &[aria-expanded="false"]{
+            background: #fff;
+            span{
+                background: #000;
+            }
+        }
+        &[aria-expanded="true"]{
+            background: #000;
+            span{
+                background: #fff;
+            }
+        }
+    }
+    
+    .container{
+        padding: 0;
+    }
+    
+    #main-navbar{
+        @media (max-width: 767px){
+            margin: 0;
+        }
+        .navbar-nav{
+            li{
+                a{
+                    padding: 0 20px;
+                    font: 13px/57px $kanit;
+                    color: #808080;
+                    letter-spacing: 1px;
+                    span{
+                        transform: rotate(180deg);
+                    }
+                    &:hover,&:focus{
+                        color: #333;
+                    }
+                }
+                &.open,&.active{
+                    a{
+                        background: none;
+                        color: #333;
+                        box-shadow: none;
+                        span{
+                            transform: rotate(0);
+                        }
+                        & + ul{
+                            padding: 4px 0;
+                            border: none;
+                            box-shadow: none;
+                            border-radius: 0;
+                            min-width: 180px;
+                            li{
+                                a{
+                                    font: 500 13px/38px $roboto;
+                                    color: #808080;
+                                    &:hover,&:focus{
+                                        color: #FFF;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                &.active{
+                    a{
+                        &:after{                            
+                            content: '';
+                            width: 9px;
+                            height: 9px;
+                            border-radius: 10px;
+                            display: block;
+                            position: absolute;
+                            top: 100%;
+                            left: 50%;
+                            transform: translateX(-50%) translateY(-50%);
+                            z-index: 1000;
+                            @media (max-width: 767px){
+                                left: 20px;
+                                transform: translateX(0) translateY(-50%);
+                            }
+                        }
+                        & + ul{
+                            li{
+                                a{
+                                    &:after{
+                                        display: none;
+                                    }
+                                    &:hover,&:focus{
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    &.open{
+                        a{
+                            &:after{
+                                display: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    &.onbottom{
+        background: #fff;
+        margin-top: -30px;
+        &.affix{
+            margin-top: 0;
+        }
+        #main-navbar{
+            .navbar-nav{
+                li{
+                    a{
+                        &:hover,&:focus{
+
+                        }
+                    }
+                    &.active{
+                        a{
+                            &:after{                            
+                                background-image: none;
+                                position: absolute;
+                                display: block;
+                                width: calc(100% - 40px);
+                                height: 2px;
+                                top: auto;
+                                bottom: -1px;
+                            }
+                        }
+                        ul{
+                            li{
+                                a{
+                                    &:after{
+                                        display: none;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    .social-nav{
+        li{
+            a{
+                line-height: 57px;
+            }
+        }
+    }
+}
+
+.subscribe-link{
+    line-height: 57px;
+    font: 13px/57px $kanit;
+    color: #808080;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    i{
+        margin-right: 10px;
+        float: left;
+        line-height: 57px;
+    }
+    &:hover,&:focus{
+        color: #333;
+    }
+}

@@ -1,0 +1,377 @@
+/*Color Variables*/
+$color: #81db34;
+$gradient_first: $color;
+$gradient_last: #34d9da;
+
+/*Button*/
+.btn-primary{    
+    border-left-color: $gradient_first;
+    border-right-color: $gradient_last;
+    background-image: -webkit-linear-gradient(left, $gradient_first 0%, $gradient_last 100%), -webkit-linear-gradient(left, $gradient_first 0%, $gradient_last 100%);
+    background-image: -moz-linear-gradient(left, $gradient_first 0%, $gradient_last 100%), -moz-linear-gradient(left, $gradient_first 0%, $gradient_last 100%);
+    background-image: -o-linear-gradient(left, $gradient_first 0%, $gradient_last 100%), -o-linear-gradient(left, $gradient_first 0%, $gradient_last 100%);
+    background-image: linear-gradient(to right, $gradient_first 0%, $gradient_last 100%), linear-gradient(to right, $gradient_first 0%, $gradient_last 100%);
+    span{
+        background: -webkit-linear-gradient(330deg, $gradient_first 0%, $gradient_last 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: $gradient_last;
+    }
+    &:hover,&:focus{
+        background-size: 100% 100%;
+        border-left-color: $gradient_first;
+        border-right-color: $gradient_last;
+        span{
+            background: -webkit-linear-gradient(330deg, #fff 0%, #fff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #fff;
+        }
+    }
+    &.btn-sm{
+        span{
+        }
+    }
+}
+
+/*Featured Post Title hover*/
+.featured-post-carousel{
+    h5{
+        a{
+            &:hover,&:focus{
+                color: $color;
+            }            
+        }
+    }
+    h2{
+        a{
+            color: #fff;
+            &:hover,&:focus{
+                color: $color;
+            }
+        }
+    }
+}
+
+/*Copyright*/
+.copyright{
+    a{
+        background: -webkit-linear-gradient(330deg, $gradient_first 0%, $gradient_last 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: $gradient_last;
+    }
+}
+
+
+/*Menu*/
+.column-menu{
+    li{
+        a{
+            span{
+                color: $color;
+            }
+            &:hover,&:focus{
+            }
+        }
+        &.open{
+            a{
+                &:hover,&:focus{
+                }
+                span{
+                }
+            }
+            ul{
+                li{
+                    a{
+                        &:hover,&:focus{
+                            color: $color;
+                        }
+                    }
+                }
+            }
+        }        
+    }
+}
+
+.navbar-default{
+    #main-navbar{
+        .nav{
+            li{
+                a{
+                    &:hover,&:focus{
+                    }
+                }
+                &.open,&.active{
+                    a{
+                        & + ul{
+                            li{
+                                a{
+                                    &:hover,&:focus{
+                                        background-image: -moz-linear-gradient( 0deg, $gradient_first 0%, $gradient_last 100%);
+                                        background-image: -webkit-linear-gradient( 0deg, $gradient_first 0%, $gradient_last 100%);
+                                        background-image: -ms-linear-gradient( 0deg, $gradient_first 0%, $gradient_last 100%);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                &.active{
+                    a{
+                        &:after{
+                            background-image: -moz-linear-gradient( 0deg, $gradient_first 0%, $gradient_last 100%);
+                            background-image: -webkit-linear-gradient( 0deg, $gradient_first 0%, $gradient_last 100%);
+                            background-image: -ms-linear-gradient( 0deg, $gradient_first 0%, $gradient_last 100%);
+                        }
+                        & + ul{
+                            li{
+                                a{
+                                    &:hover,&:focus{
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &.onbottom{
+        #main-navbar{
+            .navbar-nav{
+                li{
+                    &.active{
+                        a{
+                            &:after{                            
+                                background-color: $color;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*Logo By Text*/
+.text-logo{
+    span{
+        &:last-child{
+            color: $color;
+        }
+    }
+}
+
+
+
+/*Post Footer Category Style*/
+.post-excerpt{
+    .taxonomy{
+        background: -webkit-linear-gradient(330deg, $gradient_first 0%, $gradient_last 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: $gradient_last;
+        a{
+            color: $gradient_last;
+        }
+    }
+}
+
+.post-title{
+    a{
+        &:hover,&:focus{
+            color: $color;
+        }
+    }
+}
+
+.taxonomy{
+    background: none;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: $color;
+    color: $color;
+    a{
+        color: $color;
+    }
+}
+
+
+.post6{
+    .post-excerpt{
+        
+        footer{
+            i{
+                &:hover,&:focus{
+                    color: $color;
+                }
+            }
+        }
+    }
+}
+
+/*Author Widget*/
+.widget-author{
+    .know-more{
+        background: -webkit-linear-gradient(330deg, $gradient_first 0%, $gradient_last 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: $gradient_last;
+    }
+}
+.widget-author2{
+    .know-more{        
+        color: $color;
+    }
+}
+
+/*Quote Post*/
+.post-format-quote{
+    .post-excerpt{
+        background-image: -moz-linear-gradient( 0deg, $gradient_first 0%, $gradient_last 100%);
+        background-image: -webkit-linear-gradient( 0deg, $gradient_first 0%, $gradient_last 100%);
+        background-image: -ms-linear-gradient( 0deg, $gradient_first 0%, $gradient_last 100%);
+    }
+    .post-wrapper{
+        &:hover,&:focus{
+            .post-excerpt{
+                background-image: -moz-linear-gradient( 0deg, $gradient_first 0%, $gradient_last 100%);
+                background-image: -webkit-linear-gradient( 0deg, $gradient_first 0%, $gradient_last 100%);
+                background-image: -ms-linear-gradient( 0deg, $gradient_first 0%, $gradient_last 100%);
+            }
+        }
+    }
+}
+
+
+/*Post Share*/
+.post-share{
+    &:hover{
+        button{
+            background-image: -moz-linear-gradient( 0deg, $gradient_first 0%, $gradient_last 100%);
+            background-image: -webkit-linear-gradient( 0deg, $gradient_first 0%, $gradient_last 100%);
+            background-image: -ms-linear-gradient( 0deg, $gradient_first 0%, $gradient_last 100%);
+        }
+    }
+}
+
+/*Post Video - Media Left*/
+.has-media-wrap-sm{
+    &.post-format-video{
+        .media {
+            .media-left{
+                a{
+                    &:after{
+                        background-image: -moz-linear-gradient( 0deg, $gradient_first 0%, $gradient_last 100%);
+                        background-image: -webkit-linear-gradient( 0deg, $gradient_first 0%, $gradient_last 100%);
+                        background-image: -ms-linear-gradient( 0deg, $gradient_first 0%, $gradient_last 100%);
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+.page-content{    
+    p{
+        a{
+            color: $color;
+        }
+    }
+}
+
+.form-group{
+    label{
+        color: $color;
+    }
+}
+
+/*Single Blog*/
+.single-post-content{    
+    .post-content{        
+        blockquote{
+            &.has-sign{
+                &:before{
+                    background: -webkit-linear-gradient(330deg, $gradient_first 0%, $gradient_last 100%);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    color: $gradient_last;
+                }
+            }
+            &.no-sign{
+                p{
+                    
+                    background: -webkit-linear-gradient(330deg, $gradient_first 0%, $gradient_last 100%);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    color: $gradient_last;
+                }
+            }
+        }
+    }
+}
+
+/*Thumb Carousel*/
+
+.thumbCarousel{
+    .flexslider{
+        .slides{
+        }
+        .flex-control-nav{
+            li{
+                a{
+                    &.flex-active{
+                        background: $color;
+                    }
+                }
+            }
+        }
+    }
+    #carousel{
+        .flex-direction-nav{
+            li{
+                a{
+                    &:hover,&:focus{
+                        color: $color;
+                    }
+                    i{
+                        
+                    }
+                }
+            }
+        }
+    }
+}
+
+.tags{
+    .tag{
+        background: -webkit-linear-gradient(330deg, $gradient_first 0%, $gradient_last 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: $gradient_last;
+        &:hover,&:focus{
+            background-image: -moz-linear-gradient( 0deg, $gradient_first 0%, $gradient_last 100%);
+            background-image: -webkit-linear-gradient( 0deg, $gradient_first 0%, $gradient_last 100%);
+            background-image: -ms-linear-gradient( 0deg, $gradient_first 0%, $gradient_last 100%);
+            -webkit-background-clip: padding-box;
+            -webkit-text-fill-color: #fff;
+            color: #fff;
+        }
+    }
+}
+
+/*Comment*/
+.comment{
+    .media-body{
+        h5{
+            .reply-link{
+                background: -webkit-linear-gradient(330deg, $gradient_first 0%, $gradient_last 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                color: $gradient_last;
+            }
+        }
+    }
+}

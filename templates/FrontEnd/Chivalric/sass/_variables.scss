@@ -1,0 +1,13 @@
+$kanit: 'Kanit', sans-serif;
+$josefin: 'Josefin Sans', sans-serif;
+$dosis: 'Dosis', sans-serif;
+$muli: 'Muli', sans-serif;
+$roboto: 'Roboto', sans-serif;
+$robotomono: 'Roboto Mono';
+$fredoka: 'Fredoka One', cursive;
+$montserrat: 'Montserrat', sans-serif;
+
+// Mixins
+@mixin transition($property: all, $duration: 300ms, $animate: linear, $delay:0s){
+    transition: $property $duration $animate $delay;
+}
