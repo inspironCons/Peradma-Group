@@ -12,6 +12,6 @@ class user extends cms_controller{
     }
 
     function index(){
-        $this->app->view('index');
+        $this->app->view('pages/User');
     }
 }
