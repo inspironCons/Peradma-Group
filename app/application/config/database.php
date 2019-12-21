@@ -73,16 +73,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
-global $SConfig;
+global $GConfig;
 
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
-	'username' => $SConfig->_database_user,
-	'password' => $SConfig->_database_password,
-	'database' => $SConfig->_database_name,
+	'username' => $GConfig->_database_user,
+	'password' => $GConfig->_database_password,
+	'database' => $GConfig->_database_name,
 	'dbdriver' => 'mysqli',
-	'dbprefix' => $SConfig->_table_prefix,
+	'dbprefix' => $GConfig->_table_prefix,
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),
 	'cache_on' => FALSE,

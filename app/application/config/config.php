@@ -25,7 +25,7 @@ spl_autoload_register(function($class) {
 });
 
 
-global $SConfig;
+global $GConfig;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,7 +49,7 @@ global $SConfig;
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = $SConfig->_site_url;
+$config['base_url'] = $GConfig->_site_url;
 
 /*
 |--------------------------------------------------------------------------
