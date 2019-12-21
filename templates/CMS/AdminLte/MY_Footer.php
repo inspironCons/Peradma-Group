@@ -1,10 +1,4 @@
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
-
   <!-- Main Footer -->
   <footer class="main-footer">
     <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong>
@@ -27,7 +21,9 @@
 
 <!-- OPTIONAL SCRIPTS -->
 <script src="<?=get_template_directory(dirname(__FILE__),'')?>plugins/chart.js/Chart.min.js"></script>
-<script src="<?=get_template_directory(dirname(__FILE__),'')?>dist/js/demo.js"></script>
-<script src="<?=get_template_directory(dirname(__FILE__),'')?>dist/js/pages/dashboard3.js"></script>
+
+<!-- script untuk backend secara global di CMS folder -->
+<script src="<?=get_template_directory(dirname(__FILE__),'')?>dist/js/hashchange.min.js"></script>
+<script src="<?=get_template_directory(dirname(__FILE__),'')?>dist/js/backend.js"></script>
 </body>
 </html>

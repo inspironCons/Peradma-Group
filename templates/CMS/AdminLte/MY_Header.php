@@ -12,7 +12,8 @@
   <!-- IonIcons -->
   <!-- <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> -->
   <!-- Theme style -->
-  <link rel="stylesheet" href="<?php echo get_template_directory(dirname(__FILE__), '') ;?>dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="<?php echo get_template_directory(dirname(__FILE__), '') ;?>dist/css/paradma.css">
+  <link rel="stylesheet" href="<?php echo get_template_directory(dirname(__FILE__), '') ;?>dist/css/adminlte.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -27,10 +28,10 @@ to get the desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition accent-success sidebar-mini">
 <div class="wrapper">
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+  <nav class="main-header navbar navbar-expand navbar-success navbar-dark">
     
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
@@ -128,12 +129,12 @@ to get the desired effect
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <aside class="main-sidebar sidebar-light-success elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
       <img src="<?=get_template_directory(dirname(__FILE__),'')?>dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
-      <span class="brand-text font-weight-light">AdminLTE 3</span>
+      <span class="brand-text font-weight-light">PARADMA</span>
     </a>
 
     <!-- Sidebar -->
@@ -141,10 +142,10 @@ to get the desired effect
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="<?=get_template_directory(dirname(__FILE__),'')?>dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          <img src="<?=get_template_directory(dirname(__FILE__),'')?>dist/img/avatar.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block">Administration</a>
         </div>
       </div>
 
@@ -154,8 +155,8 @@ to get the desired effect
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           
-          <li class="nav-item">
-            <a href="<?=set_url('Dashboard')?>" class="nav-link">
+          <li class="nav-item active">
+            <a href="<?=set_url('Dashboard')?>" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>Dashboard</p>
             </a>

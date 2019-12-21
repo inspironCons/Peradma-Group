@@ -24,7 +24,62 @@
     <div class="content">
       <div class="container-fluid">
         <div class="row">
-            
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <div class="col-2 float-sm-right">
+                  <a href="<?=set_url('User#tambah');?>" role="button" class="btn btn-block bg-gradient-success btn-lg">Tambah</a>
+                </div>
+              </div>
+              <div class="card-body">
+              <table id="user-list" class="table table-bordered table-hover">
+                <thead align="center">
+                <tr>
+                  <th>No</th>
+                  <th>Username</th>
+                  <th>Dibuat</th>
+                  <th>Status</th>
+                  <th>Aksi</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td width="5%" align="center">1</td>
+                  <td width="30%">
+                    <ul class="list-inline">
+                        <li class="list-inline-item">
+                            <img alt="Avatar" class="table-avatar" src="<?=get_template_directory(dirname(__FILE__),'')?>../dist/img/avatar.png">
+                            <a href="#">Ramdhnz61</a>
+                          </li>
+                        
+                    </ul>
+                  </td>
+                  <td>28 Januari 2020</td>
+                  <td>Online</td>
+                  <td width="20%">
+                    <a class="btn btn-primary btn-sm" href="#">
+                        <i class="fas fa-folder">
+                        </i>
+                        View
+                    </a>
+                    <a class="btn btn-info btn-sm" href="#">
+                        <i class="fas fa-pencil-alt">
+                        </i>
+                        Edit
+                    </a>
+                    <a class="btn btn-danger btn-sm" href="#">
+                        <i class="fas fa-trash">
+                        </i>
+                        Delete
+                    </a>
+                  </td>
+                </tr>
+                </tbody>
+                
+              </table>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <!-- /.container-fluid -->
