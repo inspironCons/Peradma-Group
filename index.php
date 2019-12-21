@@ -179,7 +179,7 @@ switch (ENVIRONMENT)
 	// $assign_to_config['name_of_config_item'] = 'value of config item';
 
 	if(require_once('configuration.php')){
-		$SConfig = new GConfig;
+		$GConfig = new GConfig;
 	}
 
 // --------------------------------------------------------------------
