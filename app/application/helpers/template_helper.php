@@ -10,6 +10,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 		return $GConfig->_site_url.$full_path.'/'.$dir_file;
 	}
+	function get_assets($side,$dir_file){
+		global $GConfig;
+		$_this =& get_instance();
+		if($_this->app->side == 'CMS'){
+			return $GConfig->_site_url.'assets/images/'.$side.'/'.$dir_file;
+		}
+		else{
+			return $GConfig->_site_url.'assets/frontend'.$dir_file;
+		}	
+		
+	}
 
 	function get_template($view){
 		$_this =& get_instance();

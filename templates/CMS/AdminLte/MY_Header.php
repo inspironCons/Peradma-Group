@@ -9,6 +9,7 @@
 
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="<?php echo get_template_directory(dirname(__FILE__), '') ;?>plugins/fontawesome-free/css/all.css">
+  <link rel="stylesheet" href="<?php echo get_template_directory(dirname(__FILE__), '') ;?>plugins/sweetalert2/sweetalert2.all.min.js">
   <!-- IonIcons -->
   <!-- <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> -->
   <!-- Theme style -->

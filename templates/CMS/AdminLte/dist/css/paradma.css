@@ -8,3 +8,7 @@ img.table-avatar,
 .list-inline{
     margin-bottom: auto;
 }
+
+.button-table{
+  margin-right: 0.5vw;
+}
