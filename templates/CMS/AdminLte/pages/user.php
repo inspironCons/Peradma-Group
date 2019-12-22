@@ -44,26 +44,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <!-- <tr>
-                  <td width="5%" align="center">1</td>
-                  <td width='30%'>
-                    <ul class='list-inline'>
-                        <li class='list-inline-item'>
-                            <img alt='Avatar' class='table-avatar' src='<?=get_template_directory(dirname(__FILE__),'')?>../dist/img/avatar.png'>
-                            <a href='#'>Ramdhnz61</a>
-                          </li>
-                        
-                    </ul>
-                  </td>
-                  <td>Administration</td>
-                  <td>28 Januari 2020</td>
-                  <td align='center'><span class='badge badge-pill badge-success'>Online</span></td>
-                  <td width='20%'>
-                    <a class='btn btn-primary btn-sm' href='#'><i class='fas fa-folder'></i>View</a>
-                    <a class='btn btn-info btn-sm' href='#'><i class='fas fa-pencil-alt'></i>Edit</a>
-                    <a class='btn btn-danger btn-sm' href='#'><i class='fas fa-trash'></i>Delete</a>
-                  </td>
-                </tr> -->
+                
                 </tbody>
                 
               </table>
@@ -182,7 +163,8 @@
           </button>
         </div>
         <div class="modal-body">
-          <form role="form" id="form-users" action="" >
+          <form role="form" id="form-users" action="">
+          <input type="hidden" name="id" id="ID">
             <div class="row">
               <div class="col-12 col-sm-6">
                 <div class="form-group">
@@ -200,11 +182,11 @@
                 </div>
                 <div class="form-group">
                   <label for="email">Email</label>
-                  <input type="email" class="form-control" name="email" id="Email" placeholder="Enter Email">
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Enter Email">
                 </div>
                 <div class="form-group">
                   <label for="role">Select Role</label>
-                  <select class="form-control select2" name="role" style="width: 100%;">
+                  <select id="role" class="form-control select2" name="role" style="width: 100%;">
                     <option value="1">Administration</option>
                     <option value="2">Editor</option>
                     <option value="3">Author</option>
@@ -238,7 +220,7 @@
                 </div>
                 <div class="form-group">
                   <label for="phone">Handphone</label>
-                  <input type="text" name="phone" class="form-control" id="phone" placeholder="Enter Username">
+                  <input type="text" name="phone" class="form-control" id="phone" placeholder="Enter Phone Number">
                 </div>
                 <div class="form-group">
                   <label for="lokasi">Lokasi</label>
@@ -263,5 +245,7 @@
     </div>
     <!-- /.modal-dialog -->
   </div>
+
+
   <!-- /.modal -->
   <?php get_template('MY_Footer');?>

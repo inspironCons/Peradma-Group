@@ -10,12 +10,13 @@
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="<?php echo get_template_directory(dirname(__FILE__), '') ;?>plugins/fontawesome-free/css/all.css">
   <link rel="stylesheet" href="<?php echo get_template_directory(dirname(__FILE__), '') ;?>plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="<?php echo get_template_directory(dirname(__FILE__), '') ;?>plugins/sweetalert2/sweetalert2.min.css">
   <link rel="stylesheet" href="<?php echo get_template_directory(dirname(__FILE__), '') ;?>plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
   <!-- IonIcons -->
   <!-- <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> -->
   <!-- Theme style -->
-  <link rel="stylesheet" href="<?php echo get_template_directory(dirname(__FILE__), '') ;?>dist/css/paradma.css">
   <link rel="stylesheet" href="<?php echo get_template_directory(dirname(__FILE__), '') ;?>dist/css/adminlte.css">
+  <link rel="stylesheet" href="<?php echo get_template_directory(dirname(__FILE__), '') ;?>dist/css/paradma.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>

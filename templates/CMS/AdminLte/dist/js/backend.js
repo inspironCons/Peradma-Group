@@ -10,13 +10,22 @@ $(function(){
 
     // datemask plugin
     $('#tanggal_lahir').inputmask('dd-mm-yyyy', { 'placeholder': 'dd-mm-yyyy' })
+
     // function toas sweat alert 2
     const Toast = Swal.mixin({
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
         timer: 3000
-      });
+    });
+
+    const pemilihanSwal = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-danger',
+          cancelButton: 'btn btn-success'
+        },
+        buttonsStyling: false
+      })
 
     // hashchange plugin
     $(window).hashchange(function(){
@@ -25,6 +34,43 @@ $(function(){
             if(path.search('admin/User') > 0){
                 get_konsumen()
             }
+        }else if(hash.search('UPDATE') == 0){
+            if(path.search('admin/User')> 0 ){
+                var user_ID = getUrlVars()["id"]
+                var response = getJSON('http://'+host+path+'/action/GET',{id: user_ID})
+
+                $('form#form-users').attr('action','update')
+
+
+                let data    = response.data
+                var skill    = JSON.parse(data.skill)
+                let skill_text =''
+
+                for(var i=0; i<skill.length;i++){
+                    skill_text += skill[i]+','
+                }
+                 skill_text = skill_text.slice(0,-1);
+                // data tbl_user
+                $('#form-users #ID').val(data.id_user)
+                $('#form-users #username').val(data.username)
+                $('#form-users #username').prop('readonly',true)
+
+                $('#form-users #email').val(data.email)
+                $("#form-users #role").select2().select2('val',data.role);
+
+                // data tbl_user_detail
+                $('#form-users #nama_depan').val(data.nama_depan)
+                $('#form-users #nama_belakang').val(data.nama_belakang)
+                $('#form-users #tempat').val(data.tempat)
+                $('#form-users #phone').val(data.handphone)
+                $('#form-users #tanggal_lahir').val(moment(data.tanggal_lahir,'YYYY-MM-DD').format('DD-MM-YYYY'))
+                $('#form-users #lokasi').val(data.lokasi)
+                $('#form-users #skill').val(skill_text)
+
+
+            }
+            
+            $('#paradma-modal').modal('show')
         }else if(hash.search('DETAIL') == 0){
             if(path.search('admin/User')> 0 ){
                 var user_ID = getUrlVars()["id"]
@@ -74,12 +120,92 @@ $(function(){
         
             $('#paradma-modal-view').modal('show');
         }else if(hash == 'create'){
-            if(path.search('admin/User')){
+            if(path.search('admin/User')>0){
                 $('#paradma-modal h4.modal-title').text('Create New User')
                 $('#btn-create').text('Create')
                 $('form#form-users').attr('action','create')
             }
             $('#paradma-modal').modal('show');
+        }else if(hash.search('DELETE') == 0){
+            if(path.search('admin/User')>0){
+                pemilihanSwal.fire({
+                    title: 'Yakin Akan Dihapus Permanen',
+                    text: "Kamu bisa hapus data sementara loh",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya, Hapus Permanen!',
+                    cancelButtonText: 'Tidak, sementara saja!',
+                    reverseButtons: true
+                  }).then((result) => {
+                    var user_ID = getUrlVars()["id"]
+
+                    if (result.value) {
+                        window.history.pushState(null,null,path);
+                        console.log('permanent')
+                        let payload ={
+                            'type':'hard',
+                            'id':user_ID
+                        }
+                        $.ajax('http://'+host+path+'/action/delete',{
+                            type : 'POST',
+                            data : payload,
+                            dataType:'json',
+                            success:function(response){
+                                pemilihanSwal.fire(
+                                    'Deleted Permanent!',
+                                     response.message,
+                                    'success'
+                                )
+                                get_user_list(null,null)
+
+                            },
+                            error:function(xhr){
+                                pemilihanSwal.fire(
+                                    'Failuer!',
+                                    'Deleted Fail',
+                                    'error'
+                                )
+                                get_user_list(null,null)
+
+                            }
+                        })
+                        
+                    } else if (
+                      /* Read more about handling dismissals below */
+                      result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        window.history.pushState(null,null,path);
+                        console.log('sementara')
+                        let payload ={
+                            'type':'soft',
+                            'id':user_ID
+                        }
+                        $.ajax('http://'+host+path+'/action/delete',{
+                            type : 'POST',
+                            data : payload,
+                            dataType:'json',
+                            success:function(response){
+                                pemilihanSwal.fire(
+                                    'Soft Deleted!',
+                                    response.message,
+                                    'success'
+                                )
+                                get_user_list(null,null)
+                            },
+                            error:function(xhr){
+                                pemilihanSwal.fire(
+                                    'Failuer!',
+                                    'Deleted Fail',
+                                    'error'
+                                )
+                                get_user_list(null,null)
+
+                            }
+                        })
+                        
+                    }
+                  })
+            }
         }
     })
 
@@ -89,8 +215,10 @@ $(function(){
     $('#paradma-modal').on('hide.bs.modal', function(){
         window.history.pushState(null,null,path);
         $('#paradma-modal form').find("input[type=text], input[type=hidden], input[type=password], input[type=email], textarea").val("")
-        $('#paradma-modal form').find("input[type=checkbox],input[type=radio]").removeAttr('checked'); 
-        $('#paradma-modal form').find("select").prop("selected", false); 
+        $('#paradma-modal form').find("input[type=checkbox],input[type=radio]").removeAttr('checked');
+
+        $('#form-users #username').prop('readonly',false)
+
     });
     $('#paradma-modal-view').on('hide.bs.modal', function(){
         window.history.pushState(null,null,path);
@@ -122,7 +250,7 @@ $(function(){
                         icon: 'success',
                         title: response.message
                     })
-                }else if(response.code == '03'){
+                }else if(response.code == '02'){
                     Toast.fire({
                         icon: 'error',
                         title: response.message

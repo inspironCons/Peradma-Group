@@ -12,3 +12,7 @@ img.table-avatar,
 .button-table{
   margin-right: 0.5vw;
 }
+
+.swal2-actions .btn{
+  margin: 5px;
+}

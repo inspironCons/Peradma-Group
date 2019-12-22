@@ -72,23 +72,6 @@ class MY_Model extends CI_Model {
 
 		return $this->get(NULL , $single);
 	}
-
-    public function delete_soft($id){
-        $filer = $this->_primary_filter;
-		$id = $filer($id);
-		
-		if(!$id){
-			return FALSE;
-		}
-
-		$this->db->where($this->_primary_key,$id);
-        $this->db->limit(1);
-        
-        $data = array(
-            'deleted' => '1'
-        );
-        return $this->update($data,array('id_'.$this->_table_name => $id));
-    }
     
 	public function delete($id){
 		$filer = $this->_primary_filter;
