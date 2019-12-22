@@ -5,6 +5,11 @@ $(function(){
     // trigger moment locale
     moment.locale('id');
 
+    // init select2
+    $('.select2').select2()
+
+    // datemask plugin
+    $('#tanggal_lahir').inputmask('dd-mm-yyyy', { 'placeholder': 'dd-mm-yyyy' })
     // function toas sweat alert 2
     const Toast = Swal.mixin({
         toast: true,
@@ -72,6 +77,7 @@ $(function(){
             if(path.search('admin/User')){
                 $('#paradma-modal h4.modal-title').text('Create New User')
                 $('#btn-create').text('Create')
+                $('form#form-users').attr('action','create')
             }
             $('#paradma-modal').modal('show');
         }
@@ -82,6 +88,9 @@ $(function(){
 
     $('#paradma-modal').on('hide.bs.modal', function(){
         window.history.pushState(null,null,path);
+        $('#paradma-modal form').find("input[type=text], input[type=hidden], input[type=password], input[type=email], textarea").val("")
+        $('#paradma-modal form').find("input[type=checkbox],input[type=radio]").removeAttr('checked'); 
+        $('#paradma-modal form').find("select").prop("selected", false); 
     });
     $('#paradma-modal-view').on('hide.bs.modal', function(){
         window.history.pushState(null,null,path);
@@ -91,16 +100,58 @@ $(function(){
         get_user_list(null,null)
     }
 
+    // SUBMIT FORM USER
     $(document).on('click', '#submit-user', function(eve) {
         eve.preventDefault()
-        $('#paradma-modal').modal('hide')
-        Toast.fire({
-          icon: 'success',
-          title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+        var payload = $('form#form-users').serialize()
+        var action = $('#form-users').attr('action');
+        
+        console.log(payload)
+        
+        $.ajax('http://'+host+path+'/action/'+action,{
+            dataType:'json',
+            type:'POST',
+            data:payload,
+            timeout:10000,
+            success:function(response){
+                $('#paradma-modal').modal('hide')
+                get_user_list(null,null)
+                console.log(response)
+                if(response.code == '01'){
+                    Toast.fire({
+                        icon: 'success',
+                        title: response.message
+                    })
+                }else if(response.code == '03'){
+                    Toast.fire({
+                        icon: 'error',
+                        title: response.message
+                    })
+                }else{
+                    Toast.fire({
+                        icon: 'info',
+                        title: response.message
+                    })
+                }
+            },
+            error:function(xhr){
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Failure Create'
+                })
+            }
         })
+
+    });
+    
+    $(document).on('click', 'button.randomPass', function(eve) {
+        eve.preventDefault()
+
+        var str = random_password_generate(10,5)
+        $('#form-users #password').val(str)
         // $('#paradma-modal').hide()
 
-      });
+    });
 });
 
 function get_user_list(hal_aktif,scrolltop,cari){
@@ -131,7 +182,8 @@ function get_user_list(hal_aktif,scrolltop,cari){
                          status_text = 'Offline'
                     }
                     var number = no++
-                    var html = "<td width='5%' align='center'>"+number+"</td>"
+                    var html = "<tr>"
+                    html += "<td width='5%' align='center'>"+number+"</td>"
                     html += "<td width='30%'>"
                     html += "<ul class='list-inline'>"
                     html += "<li class='list-inline-item'>"
@@ -147,6 +199,7 @@ function get_user_list(hal_aktif,scrolltop,cari){
                     html += "<a class='btn btn-info btn-sm button-table' href='User#UPDATE?id="+element.id_user+"'><i class='fas fa-pencil-alt'></i>Edit</a>"
                     html += "<a class='btn btn-danger btn-sm button-table' href='User#DELETE?id="+element.id_user+"'><i class='fas fa-trash'></i>Delete</a>"
                     html += "</td>"
+                    html += "</tr>"
     
                     $('table#user-list').find('tbody').append(html)
 
@@ -180,4 +233,11 @@ function getUrlVars(){
         vars[hash[0]] = hash[1];
     }
     return vars;
+}
+
+function random_password_generate(max,min){
+    var passwordChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz#@!%&()/";
+    var randPwLen = Math.floor(Math.random() * (max - min + 1)) + min;
+    var randPassword = Array(randPwLen).fill(passwordChars).map(function(x) { return x[Math.floor(Math.random() * x.length)] }).join('');
+    return randPassword;
 }

@@ -7,7 +7,7 @@ class user extends cms_controller{
         parent::__construct();
 
         $this->load->helper(array('user_helper'));
-        $this->load->model(array('User_model'));
+        $this->load->model(array('User_model','User_detail_model'));
         $this->load->library(array());
     }
 
@@ -49,26 +49,45 @@ class user extends cms_controller{
             }else if($method == "create"){
                 $request = $this->input->post();
 
-                $data = array(
-                    'username' => 'admin_paradma',
-                    'password' => bCrypt('123456',28),						
-                    'role' => '1',						
-                    'active'=>'0',
-                    'create_at' => date('Y-m-d H:i:s'),							
-                    'update_at' => date('Y-m-d H:i:s'),
+                $payload_user = array(
+                    'username'  => $request['username'],
+                    'password'  => bCrypt($request['password'],9),			
+                    'email'      => $request['email'],						
+                    'role'      => $request['role'],
+                    'create_at' => date('Y-m-d H:i:s'),
                 );
 
-                if($this->user_model->insert($data)){
-                    $result = array(
-                        'code'=> '01',
-                        'message' => 'berhasil ditambahkan',
-                        'data' => $data,
+                $getID = $this->User_model->insert($payload_user);
+
+                if(!empty($getID)){
+                    $skill = explode(',', $request['skill']);
+                    $parseSkill = json_encode($skill);
+                    $payload_detail = array(
+                        'user_id' => $getID,
+                        'nama_depan' => $request['nama_depan'],
+                        'nama_belakang'=> $request['nama_belakang'],
+                        'tempat'=> $request['tempat'],
+                        'tanggal_lahir'=> date("Y-m-d", strtotime($request['tanggal_lahir'])),
+                        'handphone'=> $request['phone'],
+                        'lokasi'=> $request['lokasi'],
+                        'skill'=>$parseSkill,
                     );
+                    
+                    if($this->User_detail_model->insert($payload_detail)){
+                        $result = array(
+                            'code'=> '01',
+                            'message' => 'Data successfully added',
+                        );
+                    }else{
+                        $result = array(
+                            'code'=> '03',
+                            'message' => 'Success Create Data, but,Some data entered successfully',
+                        );
+                    }
                 }else{
                     $result = array(
                         'code'=> '02',
-                        'message' => 'gagal ditambahkan',
-                        'request' => $data,
+                        'message' => 'Failure Create Data',
                     );
                 }
 

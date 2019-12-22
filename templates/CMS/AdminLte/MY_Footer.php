@@ -22,6 +22,8 @@
 <!-- OPTIONAL SCRIPTS -->
 <script src="<?=get_template_directory(dirname(__FILE__),'')?>plugins/moment/moment-with-locales.min.js"></script> 
 <script src="<?=get_template_directory(dirname(__FILE__),'')?>plugins/sweetalert2/sweetalert2.min.js"></script>
+<script src="<?=get_template_directory(dirname(__FILE__),'')?>plugins/select2/js/select2.full.min.js"></script>
+<script src="<?=get_template_directory(dirname(__FILE__),'')?>plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
 
 <!-- script untuk backend secara global di CMS folder -->
 <script src="<?=get_template_directory(dirname(__FILE__),'')?>dist/js/hashchange.min.js"></script>

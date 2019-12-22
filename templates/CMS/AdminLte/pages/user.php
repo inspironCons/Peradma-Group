@@ -182,11 +182,81 @@
           </button>
         </div>
         <div class="modal-body">
-         
+          <form role="form" id="form-users" action="" >
+            <div class="row">
+              <div class="col-12 col-sm-6">
+                <div class="form-group">
+                  <label for="username">Username</label>
+                  <input type="text" class="form-control" name="username" id="username" placeholder="Enter Username">
+                </div>
+                <div class="form-group">
+                  <label for="password">Password</label>
+                  <div class="input-group">
+                  <input type="text" class="form-control" name="password" id="password" placeholder="Enter Password">
+                  <div class="input-group-append">
+                    <button type="button" class="btn btn-secondary randomPass"><i class="fas fa-key"></i></button>
+                  </div>
+                </div>
+                </div>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" class="form-control" name="email" id="Email" placeholder="Enter Email">
+                </div>
+                <div class="form-group">
+                  <label for="role">Select Role</label>
+                  <select class="form-control select2" name="role" style="width: 100%;">
+                    <option value="1">Administration</option>
+                    <option value="2">Editor</option>
+                    <option value="3">Author</option>
+                    <option value="4">Contributor</option>
+                    <option value="5">Subscribe</option>
+                    <option value="6">Member</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6">
+                <div class="form-group">
+                  <label for="nama_depan">Nama Depan</label>
+                  <input type="text" name="nama_depan" class="form-control" id="nama_depan">
+                </div>
+                <div class="form-group">
+                  <label for="nama_belakang">Nama Belakang</label>
+                  <input type="text" name="nama_belakang" class="form-control" id="nama_belakang">
+                </div>
+                <div class="form-group">
+                  <label for="tempat">Tempat</label>
+                  <input type="text" name="tempat" class="form-control" id="tempat" placeholder="Enter Tempat Lahir">
+                </div>
+                <div class="form-group">
+                  <label for="tanggal_lahir">Tanggal Lahir</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                    </div>
+                    <input type="text" name="tanggal_lahir" class="form-control" id="tanggal_lahir" data-inputmask-alias="datetime" data-inputmask-inputformat="dd-mm-yyyy" data-mask>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="phone">Handphone</label>
+                  <input type="text" name="phone" class="form-control" id="phone" placeholder="Enter Username">
+                </div>
+                <div class="form-group">
+                  <label for="lokasi">Lokasi</label>
+                  <input type="text" class="form-control" name="lokasi" id="lokasi" placeholder="Ex . Johar Baru,DKI Jakarta">
+                </div>
+                <div class="form-group">
+                  <label for="skill">Skill</label>
+                  <input type="text" class="form-control" name="skill" id="skill" placeholder="Ex . Melukis,Programming">
+                </div>
+
+              </div>
+            </div>
+            </form>
         </div>
         <div class="modal-footer justify-content-between">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           <button id="submit-user" type="button" class="btn btn-success">Create</button>
+
         </div>
       </div>
       <!-- /.modal-content -->
