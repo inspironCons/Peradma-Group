@@ -53,6 +53,20 @@ class User_model extends MY_Model {
 		)
 	);
 
+	public function GET_USER_DETAIL($id){
+		$this->db->select('{PRE}user.* , {PRE}role.role_name,{PRE}user_detail.nama_depan,{PRE}user_detail.nama_belakang,{PRE}user_detail.tempat,{PRE}user_detail.tanggal_lahir,{PRE}user_detail.handphone,{PRE}user_detail.lokasi,{PRE}user_detail.skill');
+		$this->db->join('{PRE}role','{PRE}user.role = {PRE}role.id_role','LEFT');
+		$this->db->join('{PRE}user_detail','{PRE}user.id_user = {PRE}user_detail.user_id','left');
+		return parent::get($id);
+	}
+
+	public function GET_USER($where = NULL, $limit = NULL, $offset= NULL, $single=FALSE, $select=NULL){
+		$this->db->select('{PRE}user.id_user, {PRE}user.username, {PRE}user.active, {PRE}user.create_at, {PRE}user.update_at,{PRE}user.images_path, {PRE}role.role_name');
+		$this->db->join('{PRE}role','{PRE}user.role = {PRE}role.id_role','left');
+		$this->db->group_by('{PRE}user.id_user');
+		return parent::get_by($where,$limit,$offset,$single,$select);
+	}
+
 	
 	
 }
