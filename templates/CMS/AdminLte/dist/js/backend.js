@@ -1,6 +1,13 @@
 var path = window.location.pathname;
 var host = window.location.hostname;
 
+var delay = (function(){
+    var timer = 0;
+    return function(callback, ms){
+      clearTimeout(timer);
+      timer = setTimeout(callback,ms);
+    };
+  })();
 $(function(){
     // trigger moment locale
     moment.locale('id');
@@ -25,7 +32,7 @@ $(function(){
           cancelButton: 'btn btn-success'
         },
         buttonsStyling: false
-      })
+    })
 
     // hashchange plugin
     $(window).hashchange(function(){
@@ -203,8 +210,28 @@ $(function(){
                             }
                         })
                         
+                    }else if (Swal.DismissReason.backdrop){
+                        window.history.pushState(null,null,path);
+
                     }
                   })
+            }
+        }else if(hash.search('search') == 0){
+            if(path.search('admin/User')>0){
+                let hal_aktif = null;
+                let filter = null
+                let search = null
+                var hash = getUrlVars()
+
+                if(hash.indexOf('keyword') && hash.indexOf('filter') >= 0){
+                    filter = hash['filter'];
+                    search = hash['keyword'];
+                }else if(hash.indexOf('keyword') >= 0 ){
+                    search = hash['keyword'];
+                }
+                
+                get_user_list(hal_aktif,true,filter,search)
+                
             }
         }
     })
@@ -280,15 +307,26 @@ $(function(){
         // $('#paradma-modal').hide()
 
     });
+
+    $(document).on('keyup','#search', function(){
+        delay(function(){
+          var searchkey = $('#search').val();
+          var hash = getUrlVars()
+
+          window.location.hash = "#search?keyword="+searchkey;
+
+          console.log(hash)
+        }, 1000);
+      });
 });
 
-function get_user_list(hal_aktif,scrolltop,cari){
+function get_user_list(hal_aktif,scrolltop,filter,cari){
     if($('#user-list').length > 0){
         var no = 1;
         $.ajax('http://'+host+path+'/action/GET',{
             dataType : 'json',
             type : 'POST',
-            data:{hal_aktif:hal_aktif, cari:cari},
+            data:{hal_aktif:hal_aktif, cari:cari, filter:filter},
             success:function(response){
                 /***********************/
                 /*    GET Response    */
