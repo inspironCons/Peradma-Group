@@ -40,15 +40,16 @@ class user extends cms_controller{
                     if((!empty($request['filter'])) || (!empty($request['cari']))){
                     $query_search = "username LIKE '%".$request['cari']."' OR role_name LIKE '%".$request['cari']."%'";
                     $query_filterKosong = "username LIKE '%".$request['cari']."%' OR role_name LIKE '%".$request['cari']."%' HAVING deleted = '0'";
+                    $query_filterSoft = "username LIKE '%".$request['cari']."%' OR role_name LIKE '%".$request['cari']."%' HAVING deleted = '1'";
                         if($request['filter'] != ''){
                             if($request['filter'] == 'soft'){
                                 $filter = 'soft';
-                                @$total_rows = $this->User_model->Count_detail($query_search);
-                                $query = $this->User_model->GET_USER($query_search,$GConfig->_post_page,$offset,FALSE);
+                                @$total_rows = $this->User_model->Count_detail("username LIKE '%".$request['cari']."%' OR role_name LIKE '%".$request['cari']."%' GROUP BY deleted HAVING deleted = '1'");
+                                $query = $this->User_model->GET_USER($query_filterSoft,$GConfig->_post_page,$offset,FALSE);
                             }else if($request['filter'] == 'all'){
                                 $filter = 'all';
                                 @$total_rows = $this->User_model->Count_detail($query_search);
-                                $query = $this->User_model->GET_USER(array($query_search),$GConfig->_post_page,$offset,FALSE);
+                                $query = $this->User_model->GET_USER($query_search,$GConfig->_post_page,$offset,FALSE);
                             }
                         }else{
                             $filter = 'filter kosong';
@@ -200,6 +201,24 @@ class user extends cms_controller{
 
                 echo json_encode($result);
                 
+            }else if($method == 'rollback_delete'){
+                $request = $this->input->post();
+                if(!empty($request['id'])){
+                    $payload = array(
+                        'deleted' => '0'
+                    );
+
+                    $response = $this->User_model->update($payload,array('id_user'=> $request['id']));
+
+                    $result = array(
+                        'code'=> '01',
+                        'response' => $response,
+                        'message'=> 'Rollback User Success'
+                    );
+                    
+                    echo json_encode($result);
+
+                }
             }
         }
     }

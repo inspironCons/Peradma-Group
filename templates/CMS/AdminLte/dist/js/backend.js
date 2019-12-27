@@ -216,7 +216,62 @@ $(function(){
                     }
                   })
             }
-        }else if(hash.search('search') == 0){
+        }else if(hash.search('ROLLBACK') == 0){
+            if(path.search('admin/User')>0){
+                pemilihanSwal.fire({
+                    title: 'User Account Akan di Aktifkan Kembali?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya, Aktifkan Account!',
+                    cancelButtonText: 'Tidak',
+                    reverseButtons: true
+                  }).then((result) => {
+                    var user_ID = getUrlVars()["id"]
+
+                    if (result.value) {
+                        window.history.pushState(null,null,path);
+                        console.log('permanent')
+                        let payload ={
+                            'id':user_ID
+                        }
+                        $.ajax('http://'+host+path+'/action/rollback_delete',{
+                            type : 'POST',
+                            data : payload,
+                            dataType:'json',
+                            success:function(response){
+                                pemilihanSwal.fire(
+                                    'Account Activate!',
+                                     response.message,
+                                    'success'
+                                )
+                                get_user_list(null,null)
+
+                            },
+                            error:function(xhr){
+                                pemilihanSwal.fire(
+                                    'Failuer!',
+                                    'Rollback User Fail',
+                                    'error'
+                                )
+                                get_user_list(null,null)
+
+                            }
+                        })
+                        
+                    } else if (
+                      /* Read more about handling dismissals below */
+                      result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        window.history.pushState(null,null,path);
+                        
+                    }else if (Swal.DismissReason.backdrop){
+                        window.history.pushState(null,null,path);
+
+                    }
+                  })
+            }
+        }
+        else if(hash.search('search') == 0){
             if(path.search('admin/User')>0){
                 let hal_aktif = null;
                 let filter = null
@@ -336,6 +391,7 @@ function get_user_list(hal_aktif,scrolltop,filter,cari){
                     var images = 'default.png'
                     var status
                     var status_text
+                    var button
                     if(element.images_path !==null){
                         images = element.images
                     }
@@ -346,6 +402,12 @@ function get_user_list(hal_aktif,scrolltop,filter,cari){
                     }else{
                          status ='secondary'
                          status_text = 'Offline'
+                    }
+                    
+                    if(element.deleted == 0){
+                        button = "<a class='btn btn-primary btn-sm button-table' href='User#DETAIL?id="+element.id_user+"'><i class='fas fa-user-alt'></i>View</a><a class='btn btn-info btn-sm button-table' href='User#UPDATE?id="+element.id_user+"'><i class='fas fa-pencil-alt'></i>Edit</a><a class='btn btn-danger btn-sm button-table' href='User#DELETE?id="+element.id_user+"'><i class='fas fa-trash'></i>Delete</a>"
+                    }else{
+                        button = "<a class='btn btn-secondary btn-sm button-table' href='User#ROLLBACK?id="+element.id_user+"'><i class='fas fa-angle-double-left'></i>Rollback</a><a class='btn btn-danger btn-sm button-table' href='User#DELETE?id="+element.id_user+"'><i class='fas fa-trash'></i>Delete</a>"
                     }
                     var number = no++
                     var html = "<tr>"
@@ -361,9 +423,7 @@ function get_user_list(hal_aktif,scrolltop,filter,cari){
                     html += "<td>"+moment(element.create_at,'YYYY-MM-DD H:i:s').format('LLL')+"</td>"
                     html += "<td align='center'><h5><span class='badge badge-pill badge-"+status+"'>"+status_text+"</span></h5></td>"
                     html += "<td width='20%' align='center'>"
-                    html += "<a class='btn btn-primary btn-sm button-table' href='User#DETAIL?id="+element.id_user+"'><i class='fas fa-user-alt'></i>View</a>"
-                    html += "<a class='btn btn-info btn-sm button-table' href='User#UPDATE?id="+element.id_user+"'><i class='fas fa-pencil-alt'></i>Edit</a>"
-                    html += "<a class='btn btn-danger btn-sm button-table' href='User#DELETE?id="+element.id_user+"'><i class='fas fa-trash'></i>Delete</a>"
+                    html += button
                     html += "</td>"
                     html += "</tr>"
     
