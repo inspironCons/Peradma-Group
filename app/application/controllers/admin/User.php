@@ -30,46 +30,47 @@ class user extends cms_controller{
                         'data' => $query
                     ));
                 }else{
-                    $offset = NULL;
+                    $offset = $request['start'];
                     
-                    if(!empty($post['hal_aktif']) && $post['hal_aktif'] > 1){
-						$offset = ($request['hal_aktif'] - 1) * $GConfig->_backend_perpage ;
-					}
+                    // if(!empty($post['hal_aktif']) && $post['hal_aktif'] > 1){
+					// 	$offset = ($request['hal_aktif'] - 1) * $GConfig->_backend_perpage ;
+					// }
                     // untuk search
                     
-                    if((!empty($request['filter'])) || (!empty($request['cari']))){
+                    if((!empty($request['filter'])) || (!empty($request["search"]["value"]))){
+                    $cari = $request["search"]["value"];
+                    
                     $query_search = "username LIKE '%".$request['cari']."' OR role_name LIKE '%".$request['cari']."%'";
-                    $query_filterKosong = "username LIKE '%".$request['cari']."%' OR role_name LIKE '%".$request['cari']."%' HAVING deleted = '0'";
-                    $query_filterSoft = "username LIKE '%".$request['cari']."%' OR role_name LIKE '%".$request['cari']."%' HAVING deleted = '1'";
-                        if($request['filter'] != ''){
-                            if($request['filter'] == 'soft'){
-                                $filter = 'soft';
-                                @$total_rows = $this->User_model->Count_detail("username LIKE '%".$request['cari']."%' OR role_name LIKE '%".$request['cari']."%' GROUP BY deleted HAVING deleted = '1'");
-                                $query = $this->User_model->GET_USER($query_filterSoft,$GConfig->_post_page,$offset,FALSE);
-                            }else if($request['filter'] == 'all'){
-                                $filter = 'all';
-                                @$total_rows = $this->User_model->Count_detail($query_search);
-                                $query = $this->User_model->GET_USER($query_search,$GConfig->_post_page,$offset,FALSE);
-                            }
-                        }else{
+                    // $query_filterKosong = "username LIKE '%".$request['cari']."%' OR role_name LIKE '%".$request['cari']."%' HAVING deleted = '0'";
+                    // $query_filterSoft = "username LIKE '%".$request['cari']."%' OR role_name LIKE '%".$request['cari']."%' HAVING deleted = '1'";
+                        // if($request['filter'] != ''){
+                        //     if($request['filter'] == 'soft'){
+                        //         $filter = 'soft';
+                        //         @$total_rows = $this->User_model->Count_detail("username LIKE '%".$request['cari']."%' OR role_name LIKE '%".$request['cari']."%' GROUP BY deleted HAVING deleted = '1'");
+                        //         $query = $this->User_model->GET_USER($query_filterSoft,$request['length'],$offset,FALSE);
+                        //     }else if($request['filter'] == 'all'){
+                        //         $filter = 'all';
+                        //         @$total_rows = $this->User_model->Count_detail($query_search);
+                        //         $query = $this->User_model->GET_USER($query_search,$request['length'],$offset,FALSE);
+                        //     }
+                        // }else{
                             $filter = 'filter kosong';
 
-                            $total_rows = $this->User_model->Count_detail("username LIKE '%".$request['cari']."%' OR role_name LIKE '%".$request['cari']."%' GROUP BY deleted HAVING deleted = '0'");
-                            $query = $this->User_model->GET_USER($query_filterKosong,$GConfig->_post_page,$offset,FALSE);
-                        }
+                            $total_rows = $this->User_model->Count_detail("username LIKE '%".$cari."%' OR role_name LIKE '%".$cari."%' GROUP BY deleted HAVING deleted = '0'");
+                            $query = $this->User_model->GET_USER($query_filterKosong,$request['length'],$offset,FALSE);
+                        // }
                     }else{
                         $filter = 'semua yang gak terdelete soft';
                         $total_rows = $this->User_model->count(array('deleted'=>'0'));
-                        $query = $this->User_model->GET_USER(array('deleted'=>'0'),$GConfig->_post_page,$offset,FALSE);
+                        $query = $this->User_model->GET_USER(array('deleted'=>'0'),$request['length'],$offset,FALSE);
                     }
-                  
-                    
 
                     $result = array(
-                        'total_rows' => $total_rows, 
-                        'perpage' => $GConfig->_post_page,
-                        'filter'=>$filter,
-						'record' => $query,
+                        'draw'=> intval($request["draw"]),
+                        'recordsTotal' => $total_rows, 
+                        'perpage' => $request['length'],
+                        'offset' => $request['start'],
+						'data' => $query,
                     );
                     
                     echo json_encode($result);

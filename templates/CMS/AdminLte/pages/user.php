@@ -32,7 +32,7 @@
                 </div>
               </div>
               <div class="card-body">
-              <div class="row">
+              <!-- <div class="row">
                 <div class="col-12 col-md-3">
                   <div class="input-group mb-3">
                     <div class="input-group-prepend float-right">
@@ -43,22 +43,19 @@
                         <li class="dropdown-item"><a href="<?=set_url('User#search?keyword=')?>">Show</a></li>
                         <li class="dropdown-item"><a href="<?=set_url('User#search?filter=all&keyword=')?>">Show All data</a></li>
                         <li class="dropdown-item"><a href="<?=set_url('User#search?filter=soft&keyword=')?>">Show Soft Delete Only</a></li>
-                        <!-- <li class="dropdown-divider"></li>
-                        <li class="dropdown-item"><a href="#">Separated link</a></li> -->
+                       
                       </ul>
                     </div>
-                    <!-- /btn-group -->
                     <input type="text" autocomplete="off" id="search" class="form-control">
                   </div>
-                  <!-- /input-group -->
                 </div>
-              </div>
+              </div> -->
               <div class="row">
                 <div class="col-12">
                   <table id="user-list" class="table table-bordered table-hover">
                     <thead align="center">
                     <tr>
-                      <th>No</th>
+                      <!-- <th>No</th> -->
                       <th>Username</th>
                       <th>Level</th>
                       <th>Dibuat</th>
@@ -71,6 +68,8 @@
                     </tbody>
                     
                   </table>
+
+                  
                 </div>
               </div>
               </div>

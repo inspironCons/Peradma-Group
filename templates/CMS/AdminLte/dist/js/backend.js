@@ -163,16 +163,16 @@ $(function(){
                                      response.message,
                                     'success'
                                 )
-                                get_user_list(null,null)
+                                get_user_list(null)
 
                             },
-                            error:function(xhr){
+                            error:function(){
                                 pemilihanSwal.fire(
                                     'Failuer!',
                                     'Deleted Fail',
                                     'error'
                                 )
-                                get_user_list(null,null)
+                                get_user_list(null)
 
                             }
                         })
@@ -197,15 +197,15 @@ $(function(){
                                     response.message,
                                     'success'
                                 )
-                                get_user_list(null,null)
+                                get_user_list(null)
                             },
-                            error:function(xhr){
+                            error:function(){
                                 pemilihanSwal.fire(
                                     'Failuer!',
                                     'Deleted Fail',
                                     'error'
                                 )
-                                get_user_list(null,null)
+                                get_user_list(null)
 
                             }
                         })
@@ -244,16 +244,16 @@ $(function(){
                                      response.message,
                                     'success'
                                 )
-                                get_user_list(null,null)
+                                get_user_list(null)
 
                             },
-                            error:function(xhr){
+                            error:function(){
                                 pemilihanSwal.fire(
                                     'Failuer!',
                                     'Rollback User Fail',
                                     'error'
                                 )
-                                get_user_list(null,null)
+                                get_user_list(null)
 
                             }
                         })
@@ -285,7 +285,7 @@ $(function(){
                     search = hash['keyword'];
                 }
                 
-                get_user_list(hal_aktif,true,filter,search)
+                get_user_list(hal_aktif,filter,search)
                 
             }
         }
@@ -307,7 +307,7 @@ $(function(){
     });
 
     if(path.search('admin')){
-        get_user_list(null,null)
+        get_user_list(null)
     }
 
     // SUBMIT FORM USER
@@ -325,7 +325,7 @@ $(function(){
             timeout:10000,
             success:function(response){
                 $('#paradma-modal').modal('hide')
-                get_user_list(null,null)
+                get_user_list(null)
                 console.log(response)
                 if(response.code == '01'){
                     Toast.fire({
@@ -344,7 +344,7 @@ $(function(){
                     })
                 }
             },
-            error:function(xhr){
+            error:function(){
                 Toast.fire({
                     icon: 'error',
                     title: 'Failure Create'
@@ -376,62 +376,136 @@ $(function(){
 });
 
 function get_user_list(hal_aktif,scrolltop,filter,cari){
+    var html = ''
     if($('#user-list').length > 0){
         var no = 1;
-        $.ajax('http://'+host+path+'/action/GET',{
-            dataType : 'json',
-            type : 'POST',
-            data:{hal_aktif:hal_aktif, cari:cari, filter:filter},
-            success:function(response){
-                /***********************/
-                /*    GET Response    */
-                /**********************/
-                $('table#user-list tbody tr').remove();
-                $.each(response.record, function(index, element){
-                    var images = 'default.png'
-                    var status
-                    var status_text
-                    var button
-                    if(element.images_path !==null){
-                        images = element.images
+
+        $('#user-list').DataTable( {
+            ajax: {
+                url: 'http://'+host+path+'/action/GET',
+                // dataSrc: 'record',
+                type:'POST'
+            },
+            processing:true,
+            serverSide:true,
+            order:[],
+            columnDefs:[
+                {
+                    targets:[4],
+                    orderable:false
+                }
+            ],
+            columns: [
+                
+                { data: 'username',
+                  render:function(data,type,row){
+                    images = 'default.png'
+                    if(row.images_path !==null){
+                        images = row.images_path
                     }
-                    
-                    if(element.active != '0'){
-                         status ='success'
-                         status_text = 'Online'
-                    }else{
-                         status ='secondary'
-                         status_text = 'Offline'
-                    }
-                    
-                    if(element.deleted == 0){
-                        button = "<a class='btn btn-primary btn-sm button-table' href='User#DETAIL?id="+element.id_user+"'><i class='fas fa-user-alt'></i>View</a><a class='btn btn-info btn-sm button-table' href='User#UPDATE?id="+element.id_user+"'><i class='fas fa-pencil-alt'></i>Edit</a><a class='btn btn-danger btn-sm button-table' href='User#DELETE?id="+element.id_user+"'><i class='fas fa-trash'></i>Delete</a>"
-                    }else{
-                        button = "<a class='btn btn-secondary btn-sm button-table' href='User#ROLLBACK?id="+element.id_user+"'><i class='fas fa-angle-double-left'></i>Rollback</a><a class='btn btn-danger btn-sm button-table' href='User#DELETE?id="+element.id_user+"'><i class='fas fa-trash'></i>Delete</a>"
-                    }
-                    var number = no++
-                    var html = "<tr>"
-                    html += "<td width='5%' align='center'>"+number+"</td>"
-                    html += "<td width='30%'>"
-                    html += "<ul class='list-inline'>"
+
+                    html = "<ul class='list-inline'>"
                     html += "<li class='list-inline-item'>"
                     html += "<img alt='Avatar' class='table-avatar' src='http://"+host+path.replace('admin/User','assets/images/cms/')+images+"'>"
-                    html += "<a style='padding-left: 20px;'>"+element.username+"</a>"
+                    html += "<a style='padding-left: 20px;'>"+data+"</a>"
                     html += "</li>"
                     html += "</ul>"
-                    html += "<td>"+element.role_name+"</td>"
-                    html += "<td>"+moment(element.create_at,'YYYY-MM-DD H:i:s').format('LLL')+"</td>"
-                    html += "<td align='center'><h5><span class='badge badge-pill badge-"+status+"'>"+status_text+"</span></h5></td>"
-                    html += "<td width='20%' align='center'>"
-                    html += button
-                    html += "</td>"
-                    html += "</tr>"
-    
-                    $('table#user-list').find('tbody').append(html)
 
-                })
-            }
-        })
+                    return html
+                  }
+                },
+                { data: 'role_name' },
+                { data: 'create_at',
+                  render:function(data, type, row){
+                      return moment(data,'YYYY-MM-DD H:i:s').format('LLL')
+                  }
+                },
+                { data: 'active',
+                  render:function(data, type, row){
+                    if(data != '0'){
+                        status ='success'
+                        status_text = 'Online'
+                    }else{
+                        status ='secondary'
+                        status_text = 'Offline'
+                    }
+
+                    return "<h5><span class='badge badge-pill badge-"+status+"'>"+status_text+"</span></h5>"
+                  }
+                },
+                { data:'id_user',
+                    render: function(data, type, row){
+                    if(row.deleted == 0){
+                        button = "<a class='btn btn-primary btn-sm button-table' href='User#DETAIL?id="+data+"'><i class='fas fa-user-alt'></i>View</a><a class='btn btn-info btn-sm button-table' href='User#UPDATE?id="+data+"'><i class='fas fa-pencil-alt'></i>Edit</a><a class='btn btn-danger btn-sm button-table' href='User#DELETE?id="+data+"'><i class='fas fa-trash'></i>Delete</a>"
+                    }else{
+                        button = "<a class='btn btn-secondary btn-sm button-table' href='User#ROLLBACK?id="+data+"'><i class='fas fa-angle-double-left'></i>Rollback</a><a class='btn btn-danger btn-sm button-table' href='User#DELETE?id="+data+"'><i class='fas fa-trash'></i>Delete</a>"
+                    }
+                       
+                    return button
+                } },
+             ]
+        } );
+
+        // $.ajax('http://'+host+path+'/action/GET',{
+        //     dataType : 'json',
+        //     type : 'POST',
+        //     data:{hal_aktif:hal_aktif, cari:cari, filter:filter},
+        //     success:function(response){
+        //         /***********************/
+        //         /*    GET Response    */
+        //         /**********************/
+        //         $('table#user-list tbody tr').remove();
+
+        //         $.each(response.record, function(index, data){
+        //             var images = 'default.png'
+        //             var status
+        //             var status_text
+        //             var button
+                    
+
+        //             if(data.images_path !==null){
+        //                 images = element.images
+        //             }
+                    
+                    // if(element.active != '0'){
+                    //      status ='success'
+                    //      status_text = 'Online'
+                    // }else{
+                    //      status ='secondary'
+                    //      status_text = 'Offline'
+                    // }
+                    
+        //             if(element.deleted == 0){
+        //                 button = "<a class='btn btn-primary btn-sm button-table' href='User#DETAIL?id="+element.id_user+"'><i class='fas fa-user-alt'></i>View</a><a class='btn btn-info btn-sm button-table' href='User#UPDATE?id="+element.id_user+"'><i class='fas fa-pencil-alt'></i>Edit</a><a class='btn btn-danger btn-sm button-table' href='User#DELETE?id="+element.id_user+"'><i class='fas fa-trash'></i>Delete</a>"
+        //             }else{
+        //                 button = "<a class='btn btn-secondary btn-sm button-table' href='User#ROLLBACK?id="+element.id_user+"'><i class='fas fa-angle-double-left'></i>Rollback</a><a class='btn btn-danger btn-sm button-table' href='User#DELETE?id="+element.id_user+"'><i class='fas fa-trash'></i>Delete</a>"
+        //             }
+        //             var number = no++
+
+        //             html += "<tr>"
+        //             html += "<td width='5%' align='center'>"+number+"</td>"
+        //             html += "<td width='30%'>"
+        //             html += "<ul class='list-inline'>"
+        //             html += "<li class='list-inline-item'>"
+        //             html += "<img alt='Avatar' class='table-avatar' src='http://"+host+path.replace('admin/User','assets/images/cms/')+images+"'>"
+        //             html += "<a style='padding-left: 20px;'>"+element.username+"</a>"
+        //             html += "</li>"
+        //             html += "</ul>"
+        //             html += "<td>"+element.role_name+"</td>"
+        //             html += "<td>"+moment(element.create_at,'YYYY-MM-DD H:i:s').format('LLL')+"</td>"
+        //             html += "<td align='center'><h5><span class='badge badge-pill badge-"+status+"'>"+status_text+"</span></h5></td>"
+        //             html += "<td width='20%' align='center'>"
+        //             html += button
+        //             html += "</td>"
+        //             html += "</tr>"  
+        //         })
+
+        //         $('table#user-list').find('tbody').append(html)
+
+        //         // PAGINATION
+               
+        //     }
+        // })
     }
 }
 
@@ -443,7 +517,7 @@ function getJSON(url,data){
       dataType:'json',
       global: false,
       async: false,
-      success:function(msg){
+      success:function(){
         
       }
     }).responseText);
