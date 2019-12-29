@@ -30,47 +30,45 @@ class user extends cms_controller{
                         'data' => $query
                     ));
                 }else{
-                    $offset = $request['start'];
+                    $offset = null;
                     
-                    // if(!empty($post['hal_aktif']) && $post['hal_aktif'] > 1){
-					// 	$offset = ($request['hal_aktif'] - 1) * $GConfig->_backend_perpage ;
-					// }
+                    $cari = $request["cari"];
+                    if(!empty($post['hal_aktif']) && $post['hal_aktif'] > 1){
+						$offset = ($request['hal_aktif'] - 1) * $GConfig->_post_page ;
+					}
                     // untuk search
                     
-                    if((!empty($request['filter'])) || (!empty($request["search"]["value"]))){
-                    $cari = $request["search"]["value"];
+                    if((!empty($request['filter'])) || (!empty($request["cari"]))){
                     
-                    $query_search = "username LIKE '%".$request['cari']."' OR role_name LIKE '%".$request['cari']."%'";
-                    // $query_filterKosong = "username LIKE '%".$request['cari']."%' OR role_name LIKE '%".$request['cari']."%' HAVING deleted = '0'";
-                    // $query_filterSoft = "username LIKE '%".$request['cari']."%' OR role_name LIKE '%".$request['cari']."%' HAVING deleted = '1'";
-                        // if($request['filter'] != ''){
-                        //     if($request['filter'] == 'soft'){
-                        //         $filter = 'soft';
-                        //         @$total_rows = $this->User_model->Count_detail("username LIKE '%".$request['cari']."%' OR role_name LIKE '%".$request['cari']."%' GROUP BY deleted HAVING deleted = '1'");
-                        //         $query = $this->User_model->GET_USER($query_filterSoft,$request['length'],$offset,FALSE);
-                        //     }else if($request['filter'] == 'all'){
-                        //         $filter = 'all';
-                        //         @$total_rows = $this->User_model->Count_detail($query_search);
-                        //         $query = $this->User_model->GET_USER($query_search,$request['length'],$offset,FALSE);
-                        //     }
-                        // }else{
+                    $query_search = "username LIKE '%".$cari."' OR role_name LIKE '%".$cari."%'";
+                    $query_filterKosong = "username LIKE '%".$cari."%' OR role_name LIKE '%".$cari."%' HAVING deleted = '0'";
+                        if($request['filter'] != ''){
+                            if($request['filter'] == 'soft'){
+                                $filter = 'soft';
+                                @$total_rows = $this->User_model->Count_detail($query_search);
+                                $query = $this->User_model->GET_USER($query_search,$GConfig->_post_page,$offset,FALSE);
+                            }else if($request['filter'] == 'all'){
+                                $filter = 'all';
+                                @$total_rows = $this->User_model->Count_detail($query_search);
+                                $query = $this->User_model->GET_USER(array($query_search),$GConfig->_post_page,$offset,FALSE);
+                            }
+                        }else{
                             $filter = 'filter kosong';
 
                             $total_rows = $this->User_model->Count_detail("username LIKE '%".$cari."%' OR role_name LIKE '%".$cari."%' GROUP BY deleted HAVING deleted = '0'");
-                            $query = $this->User_model->GET_USER($query_filterKosong,$request['length'],$offset,FALSE);
-                        // }
+                            $query = $this->User_model->GET_USER($query_filterKosong,$GConfig->_post_page,$offset,FALSE);
+                        }
                     }else{
                         $filter = 'semua yang gak terdelete soft';
                         $total_rows = $this->User_model->count(array('deleted'=>'0'));
-                        $query = $this->User_model->GET_USER(array('deleted'=>'0'),$request['length'],$offset,FALSE);
+                        $query = $this->User_model->GET_USER(array('deleted'=>'0'),$GConfig->_post_page,$offset,FALSE);
                     }
 
                     $result = array(
-                        'draw'=> intval($request["draw"]),
-                        'recordsTotal' => $total_rows, 
-                        'perpage' => $request['length'],
-                        'offset' => $request['start'],
-						'data' => $query,
+                        
+                        'total_row' => $total_rows,
+                        'perpage' => $GConfig->_post_page,
+						'record' => $query,
                     );
                     
                     echo json_encode($result);
@@ -202,24 +200,6 @@ class user extends cms_controller{
 
                 echo json_encode($result);
                 
-            }else if($method == 'rollback_delete'){
-                $request = $this->input->post();
-                if(!empty($request['id'])){
-                    $payload = array(
-                        'deleted' => '0'
-                    );
-
-                    $response = $this->User_model->update($payload,array('id_user'=> $request['id']));
-
-                    $result = array(
-                        'code'=> '01',
-                        'response' => $response,
-                        'message'=> 'Rollback User Success'
-                    );
-                    
-                    echo json_encode($result);
-
-                }
             }
         }
     }

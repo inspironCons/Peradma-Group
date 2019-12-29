@@ -32,7 +32,7 @@
                 </div>
               </div>
               <div class="card-body">
-              <!-- <div class="row">
+              <div class="row">
                 <div class="col-12 col-md-3">
                   <div class="input-group mb-3">
                     <div class="input-group-prepend float-right">
@@ -49,13 +49,13 @@
                     <input type="text" autocomplete="off" id="search" class="form-control">
                   </div>
                 </div>
-              </div> -->
+              </div>
               <div class="row">
                 <div class="col-12">
                   <table id="user-list" class="table table-bordered table-hover">
                     <thead align="center">
                     <tr>
-                      <!-- <th>No</th> -->
+                      <th>No</th>
                       <th>Username</th>
                       <th>Level</th>
                       <th>Dibuat</th>

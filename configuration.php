@@ -10,7 +10,7 @@
 		var $_table_prefix = "tbl_";
 		var $_web_name = "Paradma Group";
 		var $_title = "Paradma";
-		var $_post_page = 5;
+		var $_post_page = 10;
 		var $_Book_page  = 10;
 	}
 	
