@@ -40,9 +40,9 @@
                         Filter
                       </button>
                       <ul class="dropdown-menu">
-                        <li class="dropdown-item"><a href="<?=set_url('User#search?keyword=')?>">Show</a></li>
-                        <li class="dropdown-item"><a href="<?=set_url('User#search?filter=all&keyword=')?>">Show All data</a></li>
-                        <li class="dropdown-item"><a href="<?=set_url('User#search?filter=soft&keyword=')?>">Show Soft Delete Only</a></li>
+                        <li class="dropdown-item"><a href="<?=set_url('User')?>">Show</a></li>
+                        <li class="dropdown-item"><a href="<?=set_url('User#search?filter=all')?>">Show All data</a></li>
+                        <li class="dropdown-item"><a href="<?=set_url('User#search?filter=soft')?>">Show Soft Delete Only</a></li>
                        
                       </ul>
                     </div>
@@ -68,7 +68,20 @@
                     </tbody>
                     
                   </table>
-
+                  <nav aria-label="Page navigation example">
+                    <ul id="pagination-user" class="pagination justify-content-end">
+                    
+                      <!-- <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                      </li>
+                      <li class="page-item"><a class="page-link" href="#">1</a></li>
+                      <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                      </li> -->
+                    </ul>
+                  </nav>
                   
                 </div>
               </div>

@@ -26,6 +26,7 @@
 <script src="<?=get_template_directory(dirname(__FILE__),'')?>plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
 <script src="<?=get_template_directory(dirname(__FILE__),'')?>plugins/datatables/jquery.dataTables.js"></script>
 <script src="<?=get_template_directory(dirname(__FILE__),'')?>plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+<script src="<?=get_template_directory(dirname(__FILE__),'')?>plugins/summernote/summernote-bs4.min.js"></script>
 
 <!-- script untuk backend secara global di CMS folder -->
 <script src="<?=get_template_directory(dirname(__FILE__),'')?>dist/js/hashchange.min.js"></script>

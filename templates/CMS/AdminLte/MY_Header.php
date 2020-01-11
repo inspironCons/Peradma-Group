@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="<?php echo get_template_directory(dirname(__FILE__), '') ;?>plugins/datatables-bs4/css/dataTables.bootstrap4.css">
   <link rel="stylesheet" href="<?php echo get_template_directory(dirname(__FILE__), '') ;?>plugins/sweetalert2/sweetalert2.min.css">
   <link rel="stylesheet" href="<?php echo get_template_directory(dirname(__FILE__), '') ;?>plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+  <link rel="stylesheet" href="<?php echo get_template_directory(dirname(__FILE__), '') ;?>plugins/summernote/summernote-bs4.css">
   <!-- IonIcons -->
   <!-- <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> -->
   <!-- Theme style -->
@@ -159,26 +160,47 @@ to get the desired effect
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           
-          <li class="nav-item active">
-            <a href="<?=set_url('Dashboard')?>" class="nav-link active">
+          <li class="nav-item <?=is_active_menu('Dashboard','active')?>">
+            <a href="<?=set_url('Dashboard')?>" class="nav-link <?=is_active_menu('Dashboard','active')?>">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>Dashboard</p>
             </a>
           </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+          <li class="nav-item has-treeview <?=is_active_menu('Booking','menu-open')?> ">
+            <a href="#" class="nav-link <?=is_active_menu('Booking','active')?>">
+              <i class="nav-icon fas fa-bookmark"></i>
+              <p>Peminjaman Buku<i class="fas fa-angle-left right"></i></p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?=set_url('Booking#create')?>" class="nav-link">
+                  <i class="fas fa-plus-square nav-icon"></i>
+                  <p>Add Book</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?=set_url('Booking')?>" class="nav-link <?=is_active_menu('Booking','active')?>">
+                  <i class="fas fa-book nav-icon"></i>
+                  <p>List</p>
+                </a>
+              </li>
+              
+            </ul>
+          </li>
+          <li class="nav-item has-treeview <?=is_active_menu('User','menu-open')?> ">
+            <a href="#" class="nav-link <?=is_active_menu('User','active')?>">
               <i class="nav-icon fas fa-user"></i>
               <p>User Management<i class="fas fa-angle-left right"></i></p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?=set_url('User')?>" class="nav-link">
+                <a href="<?=set_url('User#create')?>" class="nav-link">
                   <i class="fas fa-user-plus nav-icon"></i>
                   <p>Create</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?=set_url('User')?>" class="nav-link">
+                <a href="<?=set_url('User')?>" class="nav-link <?=is_active_menu('User','active')?>">
                   <i class="fas fa-users nav-icon"></i>
                   <p>List</p>
                 </a>

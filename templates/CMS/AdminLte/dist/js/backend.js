@@ -223,14 +223,24 @@ $(function(){
                 let search = null
                 var hash = getUrlVars()
 
-                if(hash.indexOf('keyword') && hash.indexOf('filter') >= 0){
+                
+                if(hash['filter']){
+                    console.log('filter')
                     filter = hash['filter'];
+                }else if(hash['hal'] && hash['keyword']){
+                    console.log('keyword dan halaman')
                     search = hash['keyword'];
-                }else if(hash.indexOf('keyword') >= 0 ){
-                    search = hash['keyword'];
+                    hal_aktif = hash['hal']
+                }else if(hash['hal']){
+                    console.log('halaman')
+                    hal_aktif = hash['hal']
                 }
                 
-                get_user_list(hal_aktif,null,filter,search)
+                console.log(hal_aktif)
+                console.log(filter)
+                console.log(search)
+                get_user_list(hal_aktif,filter,search)
+                $("ul#pagination-user li a:contains('"+hal_aktif+"')").parents().addClass('active').siblings().removeClass('active');  
                 
             }
         }
@@ -252,7 +262,16 @@ $(function(){
     });
 
     if(path.search('admin')){
-        get_user_list(null)
+        get_user_list(1,null,null)
+    }
+    
+    if(path.search('create')){
+        $('#post_book_area').summernote({
+            height: 300,
+            disableGrammar: false
+        });
+        
+        $('.add_category').hide()
     }
 
     // SUBMIT FORM USER
@@ -270,7 +289,7 @@ $(function(){
             timeout:10000,
             success:function(response){
                 $('#paradma-modal').modal('hide')
-                get_user_list(null)
+                get_user_list(null,null,null)
                 console.log(response)
                 if(response.code == '01'){
                     Toast.fire({
@@ -290,6 +309,7 @@ $(function(){
                 }
             },
             error:function(){
+                get_user_list(null,null,null)
                 Toast.fire({
                     icon: 'error',
                     title: 'Failure Create'
@@ -304,24 +324,46 @@ $(function(){
 
         var str = random_password_generate(10,5)
         $('#form-users #password').val(str)
-        // $('#paradma-modal').hide()
 
     });
+
+    // show element class add_category
+    var isShow = false
+    $(document).on('click', '#btn-add_category', function(eve) {
+        eve.preventDefault()
+        console.log(!isShow)
+        if(!isShow){
+            $('.add_category').show()
+            isShow = true
+        }else{
+            $('.add_category').hide()
+            isShow = false
+        }
+
+    });
+    
 
     $(document).on('keyup','#search', function(){
         delay(function(){
           var searchkey = $('#search').val();
-          var hash = getUrlVars()
-
-          window.location.hash = "#search?keyword="+searchkey;
-
-          console.log(hash)
+          
+          if(searchkey.length == 0){
+            window.history.pushState(null,null,path);
+            get_user_list(1,null,null)
+          }else{
+            window.location.hash = "#search?hal=1&keyword="+searchkey;
+          }
+          
         }, 1000);
+
       });
 });
 
-function get_user_list(hal_aktif,scrolltop,filter,cari){
-    
+function get_user_list(hal_aktif,filter,cari){
+    // console.log('hal aktif',{hal_aktif:hal_aktif})
+    // console.log('filter',{filter:filter})
+    // console.log('cari',{cari:cari})
+
     if($('#user-list').length > 0){
         var no = 1;
         $.ajax('http://'+host+path+'/action/GET',{
@@ -372,7 +414,39 @@ function get_user_list(hal_aktif,scrolltop,filter,cari){
 
                   })
             
-        
+                    /*  PAGINATION  */
+                    var pagination  = ''
+                    var page        = Math.ceil(response.total_row / response.perpage)
+
+                    console.log(page)
+                    
+                    if(($('ul#pagination-user li').length == 0) && (hal_aktif)){
+                        console.log('masuk pagination kosongan')
+                        // menghapus element remove
+                        $('#pagination-user li').remove();
+
+                        for(var i=1; i <= page ; i++){
+                            pagination = pagination + '<li class="page-item"><a class="page-link" href="User#search?hal='+i+'">'+i+'</a></li>'
+                            
+                        }
+                    }else if(cari && hal_aktif){
+                        console.log('jika ada yang dicari')
+                        // menghapus element remove
+                        $('#pagination-user li').remove();
+
+                        for(var i=1; i <= page ; i++){
+                            pagination = pagination + '<li class="page-item"><a class="page-link" href="User#search?hal='+i+'&keyword='+cari+'">'+i+'</a></li>'
+                            
+                        }
+                    }else{
+                        $('#pagination-user li').remove();
+                    }
+
+                    // masukan var pagination kedalam element
+                    $('ul#pagination-user').append(pagination);
+                    $("ul#pagination-user li:contains('"+hal_aktif+"')").addClass('active');
+
+                    
             }
         })
     }

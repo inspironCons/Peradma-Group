@@ -32,21 +32,23 @@ class user extends cms_controller{
                 }else{
                     $offset = null;
                     
-                    $cari = $request["cari"];
-                    if(!empty($post['hal_aktif']) && $post['hal_aktif'] > 1){
+                    
+                    if(!empty($request['hal_aktif']) && $request['hal_aktif'] > 1){
 						$offset = ($request['hal_aktif'] - 1) * $GConfig->_post_page ;
 					}
                     // untuk search
                     
                     if((!empty($request['filter'])) || (!empty($request["cari"]))){
+                    $cari = $request["cari"];
                     
                     $query_search = "username LIKE '%".$cari."' OR role_name LIKE '%".$cari."%'";
+                    $query_filter = "username LIKE '%".$cari."%' OR role_name LIKE '%".$cari."%' HAVING deleted = '1'";
                     $query_filterKosong = "username LIKE '%".$cari."%' OR role_name LIKE '%".$cari."%' HAVING deleted = '0'";
                         if($request['filter'] != ''){
                             if($request['filter'] == 'soft'){
                                 $filter = 'soft';
-                                @$total_rows = $this->User_model->Count_detail($query_search);
-                                $query = $this->User_model->GET_USER($query_search,$GConfig->_post_page,$offset,FALSE);
+                                @$total_rows = $this->User_model->Count_detail("username LIKE '%".$cari."%' OR role_name LIKE '%".$cari."%' GROUP BY deleted HAVING deleted = '1'");
+                                $query = $this->User_model->GET_USER($query_filter,$GConfig->_post_page,$offset,FALSE);
                             }else if($request['filter'] == 'all'){
                                 $filter = 'all';
                                 @$total_rows = $this->User_model->Count_detail($query_search);
@@ -65,7 +67,7 @@ class user extends cms_controller{
                     }
 
                     $result = array(
-                        
+                        'filter' => $filter,
                         'total_row' => $total_rows,
                         'perpage' => $GConfig->_post_page,
 						'record' => $query,
